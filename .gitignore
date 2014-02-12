@@ -1,8 +1,11 @@
 
 # Autotools
 *.log
-/Makefile
-/Makefile.in
+*.scan
+*.tar.gz
+*~
+Makefile
+Makefile.in
 /aclocal.m4
 /ar-lib
 /autom4te.cache
