@@ -1,12 +1,13 @@
-# http://www.gnu.org/software/automake
 
-Makefile.in
-
-# http://www.gnu.org/software/autoconf
-
-/autom4te.cache
+# Autotools
+*.log
+/Makefile
+/Makefile.in
 /aclocal.m4
+/ar-lib
+/autom4te.cache
 /compile
+/config.status
 /configure
 /depcomp
 /install-sh
