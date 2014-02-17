@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <dlfcn.h>
+#include <ltdl.h>
+//#include <dlfcn.h>
 
 #include "main.h"
 #include "foobarmodule/foobar.h"
@@ -10,16 +11,18 @@ int test_dlopen(char *filename, char *symbol) {
 	int status = 0;
 	void* lib = NULL;
 
-	lib = dlopen(filename, RTLD_NOW);
+	lib = lt_dlopen(filename);
+	//lib = dlopen(filename, RTLD_NOW);
 	if (!lib) {
-		printf("Cannot load the library. Error=%s", dlerror());
+		printf("Cannot load the library. Error=%s\n", lt_dlerror());
 		status = 1;
 		goto cleanup;
 	}
 
-	say_hello df = dlsym(lib, symbol);
+	say_hello df = lt_dlsym(lib, symbol);
+	//say_hello df = dlsym(lib, symbol);
 	if (!df) {
-		printf("ERROR: Invalid library\n");
+		printf("ERROR: Invalid library.Error=%s\n", lt_dlerror());
 		status = 1;
 		goto cleanup;
 	}
@@ -27,7 +30,8 @@ int test_dlopen(char *filename, char *symbol) {
 
 cleanup:
 	if (lib) {
-		dlclose(lib);
+		lt_dlclose(lib);
+		//dlclose(lib);
 	}
 	return status;
 }
