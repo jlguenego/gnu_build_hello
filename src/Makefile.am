@@ -1,4 +1,4 @@
-SUBDIRS = foobarmodule
+SUBDIRS = foobarmodule plugins/a plugins/b
 
 bin_PROGRAMS = gnu_build_hello
 gnu_build_hello_SOURCES = main.c

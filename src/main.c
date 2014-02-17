@@ -1,9 +1,38 @@
 #include <stdio.h>
+#include <dlfcn.h>
 
 #include "main.h"
 #include "foobarmodule/foobar.h"
 
-int main() {
+typedef void (*say_hello)(void);
+
+int test_dlopen(char *filename, char *symbol) {
+	int status = 0;
+	void* lib = NULL;
+
+	lib = dlopen(filename, RTLD_NOW);
+	if (!lib) {
+		printf("Cannot load the library. Error=%s", dlerror());
+		status = 1;
+		goto cleanup;
+	}
+
+	say_hello df = dlsym(lib, symbol);
+	if (!df) {
+		printf("ERROR: Invalid library\n");
+		status = 1;
+		goto cleanup;
+	}
+	df();
+
+cleanup:
+	if (lib) {
+		dlclose(lib);
+	}
+	return status;
+}
+
+int main(int argc, char* argv[]) {
 	printf("Start Main...\n");
 	struct Point p;
 	p.x = 1;
@@ -17,5 +46,13 @@ int main() {
 		printf("%02x", hash[i]);
 	}
 	printf("\n");
+
+	//load a plugin and call its 'say_hello' function.
+	if (argc < 2) {
+		printf("need 2 args.");
+	} else {
+		test_dlopen(argv[1], "say_hello");
+	}
+
 	return 0;
 }
