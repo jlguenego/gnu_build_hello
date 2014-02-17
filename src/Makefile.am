@@ -1,5 +1,8 @@
 SUBDIRS = foobarmodule plugins/a plugins/b
 
+AM_CFLAGS = -g3 -O0
+AM_CXXFLAGS = -g3 -O0
+
 bin_PROGRAMS = gnu_build_hello
 gnu_build_hello_SOURCES = main.c
 noinst_HEADERS = main.h

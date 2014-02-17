@@ -8,14 +8,21 @@
 typedef void (*say_hello)(void);
 
 int test_dlopen(char *filename, char *symbol) {
-	int status = 0;
+	int result = 0;
 	void* lib = NULL;
+
+	int r = 0;
+	if ((r = lt_dlinit()) > 0) {
+		printf("Cannot init ltdl. Error=%s\n", lt_dlerror());
+		result = 1;
+		goto cleanup;
+	}
 
 	lib = lt_dlopen(filename);
 	//lib = dlopen(filename, RTLD_NOW);
 	if (!lib) {
 		printf("Cannot load the library. Error=%s\n", lt_dlerror());
-		status = 1;
+		result = 1;
 		goto cleanup;
 	}
 
@@ -23,7 +30,7 @@ int test_dlopen(char *filename, char *symbol) {
 	//say_hello df = dlsym(lib, symbol);
 	if (!df) {
 		printf("ERROR: Invalid library.Error=%s\n", lt_dlerror());
-		status = 1;
+		result = 1;
 		goto cleanup;
 	}
 	df();
@@ -33,7 +40,10 @@ cleanup:
 		lt_dlclose(lib);
 		//dlclose(lib);
 	}
-	return status;
+	if (r == 0) {
+		lt_dlexit();
+	}
+	return result;
 }
 
 int main(int argc, char* argv[]) {
