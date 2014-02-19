@@ -8,6 +8,9 @@ AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 
+AC_MSG_NOTICE([JLG: This is a custom message.])
+
+
 
 # Checks for programs.
 AC_PROG_CC
