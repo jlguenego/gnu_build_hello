@@ -21,8 +21,8 @@ LT_PREREQ([2.4])
 LT_INIT([dlopen])
 
 # Checks for libraries.
-AC_CHECK_LIB([crypto], [SHA1])
-AC_CHECK_LIB([ltdl], [lt_dlopen])
+#AC_CHECK_LIB([crypto], [SHA1])
+#AC_CHECK_LIB([ltdl], [lt_dlopen])
 #AC_CHECK_LIB([asdfasdfasdf], [lt_dlopen], [], [
 #	echo "pas trouve..."
 #	exit 1
